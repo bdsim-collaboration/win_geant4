@@ -1,2 +1,2 @@
-conda install -c cmake
+conda install -c conda-forge  cmake
 
