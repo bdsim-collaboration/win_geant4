@@ -22,6 +22,10 @@ jobs:
         os: [windows-2019, windows-2022]
 
     steps:
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+	  
       - uses: actions/checkout@v4       
 
       - name: Install conda dependencies on MacOS
