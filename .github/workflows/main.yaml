@@ -1,0 +1,70 @@
+name: build mac geant4
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  build-geant4:
+    name: Build geant4
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+      checks: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        geant4-version: ["v10.7.4", "v11.0.4", "v11.1.3", "v11.2.2"]
+        os: [windows-2019, windows-2022]
+
+    steps:
+      - uses: actions/checkout@v4       
+
+      - name: Install conda dependencies on MacOS
+        if: runner.os == 'windows'
+        run: .github/bin/install-deps-windows.cmd
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v2
+        id: cpu-cores
+
+      - name: Build Geant4
+        shell: bash
+        run: |
+          git clone https://gitlab.cern.ch/geant4/geant4.git
+          cd geant4
+          git checkout ${{ matrix.geant4-version }}
+          cd ../
+          mkdir geant4-build
+          mkdir geant4-${{ matrix.geant4-version }}
+          cd geant4-build 
+          cmake -DCMAKE_INSTALL_PREFIX=../geant4-${{ matrix.geant4-version }} ../geant4 -DGEANT4_INSTALL_DATA=ON -DGEANT4_USE_GDML=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_SYSTEM_CLHEP=ON -DGEANT4_USE_RAYTRACER_X11=ON
+          make -j${{ steps.cpu-cores.outputs.count }} 
+          make install
+          cd ../
+          tar vzcf geant4-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz geant4-${{ matrix.geant4-version }}
+
+      - name: Create Release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          name: Release ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          prerelease: false
+          allowUpdates: true
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./geant4-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz
+          asset_name: geant4-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz
+          asset_content_type: application/gzip
