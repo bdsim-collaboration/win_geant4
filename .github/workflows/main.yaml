@@ -38,7 +38,7 @@ jobs:
 
       - name: Build CLHEP
         shell: bash
-	run: |
+        run: |
           wget https://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-2.4.7.1.tgz
           tar -xf clhep-2.4.7.1.tgz
           mkdir clhep-build
