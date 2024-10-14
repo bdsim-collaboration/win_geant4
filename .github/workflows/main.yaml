@@ -36,6 +36,19 @@ jobs:
         uses: SimenB/github-actions-cpu-cores@v2
         id: cpu-cores
 
+      - name: Build CLHEP
+        shell: bash
+	run: |
+          wget https://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-2.4.7.1.tgz
+          tar -xf clhep-2.4.7.1.tgz
+          mkdir clhep-build
+	  cd clhep-build
+	  cmake ../2.4.7.1/CLHEP/
+          make -j${{ steps.cpu-cores.outputs.count }}
+	  make install
+	  cd ../
+	  rm -rfv 2.4.7.1 clhep-build
+
       - name: Build Geant4
         shell: bash
         run: |
