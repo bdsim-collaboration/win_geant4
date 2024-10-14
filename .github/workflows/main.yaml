@@ -25,10 +25,11 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
-  
+          python-version: 3.12
+ 
       - uses: actions/checkout@v4       
 
-      - name: Install conda dependencies on MacOS
+      - name: Install conda dependencies on Windows
         if: runner.os == 'windows'
         run: .github/bin/install-deps-windows.cmd
 
