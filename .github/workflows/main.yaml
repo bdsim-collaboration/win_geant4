@@ -44,8 +44,7 @@ jobs:
           mkdir clhep-build
           cd clhep-build
           cmake -DCMAKE_INSTALL_PREFIX=../clhep-${{ matrix.os }} ../2.4.7.1/CLHEP/
-          set CL=/MP
-          nmake 
+          cmake --build . -j
           cd ../
 
 
