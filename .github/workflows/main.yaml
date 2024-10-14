@@ -1,4 +1,4 @@
-name: build mac geant4
+name: build windows geant4
 
 on:
   push:
