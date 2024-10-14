@@ -43,11 +43,11 @@ jobs:
           tar -xf clhep-2.4.7.1.tgz
           mkdir clhep-build
           cd clhep-build
-          cmake ../2.4.7.1/CLHEP/
-          make -j${{ steps.cpu-cores.outputs.count }}
-          make install
+          cmake -DCMAKE_INSTALL_PREFIX=../clhep-${{ matrix.os }} ../2.4.7.1/CLHEP/
+          set CL=/MP
+          nmake 
           cd ../
-          rm -rfv 2.4.7.1 clhep-build
+
 
       - name: Build Geant4
         shell: bash
