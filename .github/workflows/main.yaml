@@ -43,7 +43,7 @@ jobs:
           tar -xf clhep-2.4.6.3.tgz
           patch ./2.4.6.3/CLHEP/Random/test/testAnonymousEngineRestore.cc .github/patches/testAnonymousEngineRestore.patch
           patch ./2.4.6.3/CLHEP/Random/test/testBug73093.cc .github/patches/testBug73093.patch
-          patch ./2.4.6.3/CLHEP/Random/test/testInstanceRestore.cc .github/patches/testBug73093.patch
+          patch ./2.4.6.3/CLHEP/Random/test/testInstanceRestore.cc .github/patches/testInstanceRestore.patch
           patch ./2.4.6.3/CLHEP/Random/test/testVectorSave.cc .github/patches/testVectorSave.patch
           mkdir clhep-build
           cd clhep-build
