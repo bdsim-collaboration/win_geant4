@@ -44,7 +44,7 @@ jobs:
           patch ./2.4.6.3/CLHEP/Random/test/testAnonymousEngineRestore.cc .github/patch/testAnonymousEngineRestore.patch
           patch ./2.4.6.3/CLHEP/Random/test/testBug73093.cc .github/patch/testBug73093.patch
           patch ./2.4.6.3/CLHEP/Random/test/testInstanceRestore.cc .github/patch/testBug73093.patch
-	  patch ./2.4.6.3/CLHEP/Random/test/testVectorSave.cc .github/patch/testVectorSave.patch
+          patch ./2.4.6.3/CLHEP/Random/test/testVectorSave.cc .github/patch/testVectorSave.patch
           mkdir clhep-build
           cd clhep-build
           cmake -DCMAKE_INSTALL_PREFIX=../clhep-${{ matrix.os }} ../2.4.6.3/CLHEP/
