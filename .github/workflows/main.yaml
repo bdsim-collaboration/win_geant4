@@ -39,12 +39,13 @@ jobs:
       - name: Build CLHEP
         shell: bash
         run: |
-          curl --output clhep-2.4.7.1.tgz https://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-2.4.7.1.tgz
-          tar -xf clhep-2.4.7.1.tgz
+          curl --output clhep-2.4.7.1.tgz https://proj-clhep.web.cern.ch/proj-clhep/dist1/clhep-2.4.6.3.tgz
+          tar -xf clhep-2.4.6.3.tgz
           mkdir clhep-build
           cd clhep-build
-          cmake -DCMAKE_INSTALL_PREFIX=../clhep-${{ matrix.os }} ../2.4.7.1/CLHEP/
+          cmake -DCMAKE_INSTALL_PREFIX=../clhep-${{ matrix.os }} ../2.4.6.3/CLHEP/
           cmake --build . -j
+          cmake --install
           cd ../
 
 
@@ -59,8 +60,8 @@ jobs:
           mkdir geant4-${{ matrix.geant4-version }}
           cd geant4-build 
           cmake -DCMAKE_INSTALL_PREFIX=../geant4-${{ matrix.geant4-version }} ../geant4 -DGEANT4_INSTALL_DATA=ON -DGEANT4_USE_GDML=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_SYSTEM_CLHEP=ON -DGEANT4_USE_RAYTRACER_X11=ON
-          make -j${{ steps.cpu-cores.outputs.count }} 
-          make install
+          cmake --build -j${{ steps.cpu-cores.outputs.count }} 
+          cmake --install
           cd ../
           tar vzcf geant4-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz geant4-${{ matrix.geant4-version }}
 
