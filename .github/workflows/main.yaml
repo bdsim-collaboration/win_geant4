@@ -49,7 +49,7 @@ jobs:
           cd clhep-build
           cmake -DCMAKE_INSTALL_PREFIX=../clhep-${{ matrix.os }} ../2.4.6.3/CLHEP/
           cmake --build . -j
-          cmake --install
+          cmake --install ../clhep-${{ matrix.os }}
           cd ../
 
 
