@@ -50,7 +50,7 @@ jobs:
           cd clhep-build
           cmake ../2.4.6.3/CLHEP/
           cmake --build . -j
-          cmake --install ../geant4-${{ matrix.geant4-version }}
+          cmake --install -j --prefix=../geant4-${{ matrix.geant4-version }}
           cd ../
 
 
@@ -66,7 +66,7 @@ jobs:
           cd geant4-build 
           cmake ../geant4 -DGEANT4_INSTALL_DATA=ON -DGEANT4_USE_GDML=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_SYSTEM_CLHEP=ON -DGEANT4_USE_RAYTRACER_X11=ON
           cmake --build -j${{ steps.cpu-cores.outputs.count }} 
-          cmake --install ../geant4-${{ matrix.geant4-version }}
+          cmake --install --prefix=../geant4-${{ matrix.geant4-version }}
           cd ../
           tar vzcf geant4-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz geant4-${{ matrix.geant4-version }}
 
