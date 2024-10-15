@@ -1,0 +1,11 @@
+--- testBug73093.cc	2022-12-20 18:01:49
++++ testBug73093_mod.cc	2024-10-15 19:01:31
+@@ -74,7 +74,7 @@
+ 
+ 	rng.setSeed(seed, /*lux*/ 1);
+ 
+-        double __attribute__ ((unused)) sum = 0;
++        double sum = 0;
+ 	for (long i=0; i<N; ++i) {
+ 	  double r = rng.flat();
+ 	  if( std::abs(r) > 1.0 ) ++bad;

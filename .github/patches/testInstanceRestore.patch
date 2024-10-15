@@ -1,0 +1,11 @@
+--- testInstanceRestore.cc	2022-12-20 18:01:49
++++ testInstanceRestore_mod.cc	2024-10-15 19:03:02
+@@ -188,7 +188,7 @@
+   int stat = 0;
+   output << "checkSaveDistribution with " << d.engine().name() 
+   	    << ", " << d.name() << "\n";
+-  double __attribute__ ((unused)) r = 0;
++  double r = 0;
+   r = d();
+   double keyValue1, keyValue2, keyValue3, keyValue4;
+   for (int i=0; i<nth; i++) r += d();
