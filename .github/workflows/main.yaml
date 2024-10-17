@@ -50,7 +50,7 @@ jobs:
           cd clhep-build
           cmake ../2.4.6.3/CLHEP/
           cmake --build . -j
-          cmake --install -j --prefix=${{runner.temp}}/geant4-${{ matrix.geant4-version }}
+          cmake --install --prefix=${{runner.temp}}/geant4-${{ matrix.geant4-version }}
           cd ../
 
 
