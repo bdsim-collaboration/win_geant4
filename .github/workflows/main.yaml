@@ -48,7 +48,7 @@ jobs:
           mkdir clhep-build
           mkdir geant4-${{ matrix.geant4-version }}  
           cd clhep-build
-          mkdir ${{runner.temp}}/BDSIMDeps/
+          mkdir -p ${{runner.temp}}/BDSIMDeps
           cmake ../2.4.6.3/CLHEP/ -DCMAKE_INSTALL_PREFIX=${{runner.temp}}/BDSIMDeps/CLHEP-2.4.6.3
           cmake --build . -j
           cmake --install . 
