@@ -48,7 +48,8 @@ jobs:
           mkdir clhep-build
           mkdir geant4-${{ matrix.geant4-version }}  
           cd clhep-build
-          cmake ../2.4.6.3/CLHEP/ -DCMAKE_INSTALL_PREFIX=${{runner.temp}}/geant4-${{matrix.geant4-version}}
+          mkdir ${{runner.temp}}/BDSIMDeps/
+          cmake ../2.4.6.3/CLHEP/ -DCMAKE_INSTALL_PREFIX=${{runner.temp}}/BDSIMDeps/CLHEP-2.4.6.3
           cmake --build . -j
           cmake --install . 
           cd ../
@@ -64,11 +65,11 @@ jobs:
           mkdir geant4-build
           mkdir geant4-${{ matrix.geant4-version }}
           cd geant4-build 
-          cmake ../geant4 -DGEANT4_INSTALL_DATA=ON -DGEANT4_USE_GDML=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_SYSTEM_CLHEP=ON -DGEANT4_USE_RAYTRACER_X11=ON -DCMAKE_PREFIX_PATH=${{runner.temp}}/geant4-${{matrix.geant4-version}} -DCMAKE_INSTALL_PREFIX=${{runner.temp}}/geant4-${{matrix.geant4-version}}
+          cmake ../geant4 -DGEANT4_INSTALL_DATA=ON -DGEANT4_USE_GDML=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_SYSTEM_CLHEP=ON -DGEANT4_USE_RAYTRACER_X11=ON -DCMAKE_PREFIX_PATH=${{runner.temp}}/BDSIMDeps/CLHEP-2.4.6.3 -DCMAKE_INSTALL_PREFIX=${{runner.temp}}/BDSIMDeps/geant4-${{matrix.geant4-version}}
           cmake --build -j${{ steps.cpu-cores.outputs.count }} 
           cmake --install .
-          cd ../
-          tar vzcf ${{runner.temp}}/geant4-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz geant4-${{ matrix.geant4-version }}
+          cd ${{runner.temp}}/
+          tar vzcf ${{runner.temp}}/BDSIMDeps-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz ./BDSIMDeps
 
       - name: Create Release
         id: create_release
@@ -87,6 +88,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./geant4-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz
-          asset_name: geant4-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz
+          asset_path: ./BDSIMDeps-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz
+          asset_name: BDSIMDeps-${{ matrix.os }}-${{ matrix.geant4-version }}.tgz
           asset_content_type: application/gzip
